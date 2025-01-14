@@ -82,13 +82,13 @@ impl Network {
     /// ```rust
     /// use bitcoin::network::constants::Network;
     ///
-    /// assert_eq!(Some(Network::Bitcoin), Network::from_magic(0xD9B4BEF9));
+    /// assert_eq!(Some(Network::Bitcoin), Network::from_magic(0xD2B9BAF6));
     /// assert_eq!(None, Network::from_magic(0xFFFFFFFF));
     /// ```
     pub fn from_magic(magic: u32) -> Option<Network> {
         // Note: any new entries here must be added to `magic` below
         match magic {
-            0xD9B4BEF9 => Some(Network::Bitcoin),
+            0xD2B9BAF6 => Some(Network::Bitcoin),
             0x0709110B => Some(Network::Testnet),
             0x40CF030A => Some(Network::Signet),
             0xDAB5BFFA => Some(Network::Regtest),
@@ -105,12 +105,12 @@ impl Network {
     /// use bitcoin::network::constants::Network;
     ///
     /// let network = Network::Bitcoin;
-    /// assert_eq!(network.magic(), 0xD9B4BEF9);
+    /// assert_eq!(network.magic(), 0xD2B9BAF6);
     /// ```
     pub fn magic(self) -> u32 {
         // Note: any new entries here must be added to `from_magic` above
         match self {
-            Network::Bitcoin => 0xD9B4BEF9,
+            Network::Bitcoin => 0xD2B9BAF6,
             Network::Testnet => 0x0709110B,
             Network::Signet  => 0x40CF030A,
             Network::Regtest => 0xDAB5BFFA,
@@ -293,12 +293,12 @@ mod tests {
 
     #[test]
     fn serialize_test() {
-        assert_eq!(serialize(&Network::Bitcoin.magic()), &[0xf9, 0xbe, 0xb4, 0xd9]);
+        assert_eq!(serialize(&Network::Bitcoin.magic()), &[0xf9, 0xba, 0xb9, 0xd2]);
         assert_eq!(serialize(&Network::Testnet.magic()), &[0x0b, 0x11, 0x09, 0x07]);
         assert_eq!(serialize(&Network::Signet.magic()), &[0x0a, 0x03, 0xcf, 0x40]);
         assert_eq!(serialize(&Network::Regtest.magic()), &[0xfa, 0xbf, 0xb5, 0xda]);
 
-        assert_eq!(deserialize(&[0xf9, 0xbe, 0xb4, 0xd9]).ok(), Some(Network::Bitcoin.magic()));
+        assert_eq!(deserialize(&[0xf9, 0xba, 0xb9, 0xd2]).ok(), Some(Network::Bitcoin.magic()));
         assert_eq!(deserialize(&[0x0b, 0x11, 0x09, 0x07]).ok(), Some(Network::Testnet.magic()));
         assert_eq!(deserialize(&[0x0a, 0x03, 0xcf, 0x40]).ok(), Some(Network::Signet.magic()));
         assert_eq!(deserialize(&[0xfa, 0xbf, 0xb5, 0xda]).ok(), Some(Network::Regtest.magic()));
